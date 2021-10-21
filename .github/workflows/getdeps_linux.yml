@@ -6,7 +6,7 @@ jobs:
   build:
     strategy:
       matrix:
-        runs-on: [ubuntu-18.04, buildjet-2vcpu-ubuntu-1804, buildjet-4vcpu-ubuntu-1804, buildjet-8vcpu-ubuntu-1804, mbp2015vm]
+        runs-on: [ubuntu-18.04, buildjet-2vcpu-ubuntu-1804, buildjet-4vcpu-ubuntu-1804, buildjet-8vcpu-ubuntu-1804, mbp2015vm2004]
     name: CI ${{matrix.runs-on}}
     runs-on: ${{matrix.runs-on}}
     steps:
