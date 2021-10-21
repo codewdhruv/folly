@@ -12,7 +12,11 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        runs-on: [ubuntu-18.04, buildjet-2vcpu-ubuntu-1804, buildjet-4vcpu-ubuntu-1804, buildjet-8vcpu-ubuntu-1804, mbp2015vm]
+    name: CI ${{matrix.runs-on}}
+    runs-on: ${{matrix.runs-on}}
     steps:
     - uses: actions/checkout@v1
     - name: Fetch boost
