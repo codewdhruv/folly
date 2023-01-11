@@ -24,8 +24,6 @@ pipeline:
                   name: fetch
                   identifier: fetch
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py fetch --no-tests <+matrix.deps>
                   failureStrategies: []
@@ -50,8 +48,6 @@ pipeline:
                   name: build
                   identifier: build
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --no-tests <+matrix.deps>
                   failureStrategies: []
@@ -78,8 +74,6 @@ pipeline:
                   name: build folly
                   identifier: build_folly
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --src-dir=. folly  --project-install-prefix folly:/usr/local
                   when:
