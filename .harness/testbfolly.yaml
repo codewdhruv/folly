@@ -49,11 +49,11 @@ pipeline:
                   identifier: build
                   spec:
                     shell: Sh
-                    command: python3 build/fbcode_builder/getdeps.py build --no-tests <+matrix.deps>
+                    command: python3 build/fbcode_builder/getdeps.py build --no-tests <+repeat.item>
                   failureStrategies: []
                   strategy:
-                    matrix:
-                      deps:
+                    repeat:
+                      items:
                         - boost
                         - ninja
                         - cmake
