@@ -17,12 +17,6 @@ pipeline:
         type: CI
         spec:
           cloneCodebase: true
-          platform:
-            os: Linux
-            arch: Amd64
-          runtime:
-            type: Cloud
-            spec: {}
           execution:
             steps:
               - step:
@@ -30,6 +24,8 @@ pipeline:
                   name: fetch
                   identifier: fetch
                   spec:
+                    connectorRef: DhrubajyotiDocker
+                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py fetch --no-tests <+matrix.deps>
                   failureStrategies: []
@@ -54,6 +50,8 @@ pipeline:
                   name: build
                   identifier: build
                   spec:
+                    connectorRef: DhrubajyotiDocker
+                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --no-tests <+matrix.deps>
                   failureStrategies: []
@@ -80,8 +78,17 @@ pipeline:
                   name: build folly
                   identifier: build_folly
                   spec:
+                    connectorRef: DhrubajyotiDocker
+                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --src-dir=. folly  --project-install-prefix folly:/usr/local
                   when:
                     stageStatus: All
                   failureStrategies: []
+          infrastructure:
+            type: KubernetesDirect
+            spec:
+              connectorRef: k8sdhruba
+              namespace: default
+              nodeSelector: {}
+              os: Linux
