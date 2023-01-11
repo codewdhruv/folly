@@ -50,3 +50,27 @@ pipeline:
                         - snappy
                         - zstd
                       maxConcurrency: 5
+              - step:
+                  type: Run
+                  name: build
+                  identifier: build
+                  spec:
+                    shell: Sh
+                    command: python3 build/fbcode_builder/getdeps.py build --no-tests <+matrix.deps>
+                  failureStrategies: []
+                  strategy:
+                    matrix:
+                      deps:
+                        - boost
+                        - ninja
+                        - cmake
+                        - double-conversion
+                        - fmt
+                        - gflags
+                        - glog
+                        - googletest
+                        - libevent
+                        - lz4
+                        - snappy
+                        - zstd
+                      maxConcurrency: 5
