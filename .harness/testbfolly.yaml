@@ -74,3 +74,10 @@ pipeline:
                         - snappy
                         - zstd
                       maxConcurrency: 5
+              - step:
+                  type: Run
+                  name: build folly
+                  identifier: build_folly
+                  spec:
+                    shell: Sh
+                    command: python3 build/fbcode_builder/getdeps.py build --src-dir=. folly  --project-install-prefix folly:/usr/local
