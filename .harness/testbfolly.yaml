@@ -42,7 +42,7 @@ pipeline:
                         - lz4
                         - snappy
                         - zstd
-                      maxConcurrency: 3
+                      maxConcurrency: 1
               - step:
                   type: Run
                   name: build
