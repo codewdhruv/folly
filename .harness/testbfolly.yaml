@@ -1,0 +1,52 @@
+pipeline:
+  name: test-b-folly
+  identifier: testbfolly
+  projectIdentifier: DhrubaCI
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: dhrubaaccountconnector
+        repoName: folly
+        build: <+input>
+  stages:
+    - stage:
+        name: linux
+        identifier: linux
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: Linux
+            arch: Amd64
+          runtime:
+            type: Cloud
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: fetch
+                  identifier: fetch
+                  spec:
+                    shell: Sh
+                    command: python3 build/fbcode_builder/getdeps.py fetch --no-tests <+matrix.deps>
+                  failureStrategies: []
+                  strategy:
+                    matrix:
+                      deps:
+                        - boost
+                        - ninja
+                        - cmake
+                        - double-conversion
+                        - fmt
+                        - gflags
+                        - glog
+                        - googletest
+                        - libevent
+                        - lz4
+                        - snappy
+                        - zstd
+                      maxConcurrency: 5
