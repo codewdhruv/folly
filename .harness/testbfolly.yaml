@@ -1,6 +1,6 @@
 pipeline:
-  name: test-b-folly
   identifier: testbfolly
+  name: test-b-folly
   projectIdentifier: DhrubaCI
   orgIdentifier: default
   tags: {}
@@ -9,23 +9,24 @@ pipeline:
       codebase:
         connectorRef: dhrubaaccountconnector
         repoName: folly
-        build: <+input>
+        build:
+          type: branch
+          spec:
+            branch: main
   stages:
     - stage:
-        name: linux
         identifier: linux
         type: CI
+        name: linux
         spec:
           cloneCodebase: true
           execution:
             steps:
               - step:
+                  identifier: fetch
                   type: Run
                   name: fetch
-                  identifier: fetch
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py fetch --no-tests <+matrix.deps>
                   failureStrategies: []
@@ -46,12 +47,10 @@ pipeline:
                         - zstd
                       maxConcurrency: 1
               - step:
+                  identifier: build
                   type: Run
                   name: build
-                  identifier: build
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --no-tests <+repeat.item>
                   failureStrategies: []
@@ -74,12 +73,10 @@ pipeline:
                   when:
                     stageStatus: All
               - step:
+                  identifier: build_folly
                   type: Run
                   name: build folly
-                  identifier: build_folly
                   spec:
-                    connectorRef: DhrubajyotiDocker
-                    image: ubuntu:18.04
                     shell: Sh
                     command: python3 build/fbcode_builder/getdeps.py build --src-dir=. folly  --project-install-prefix folly:/usr/local
                   when:
